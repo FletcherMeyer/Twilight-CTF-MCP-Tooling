@@ -8,7 +8,7 @@ The MCP tool that lets an AI agent work on your team's CTFSheet. It runs **on yo
 Python 3.10+ required.
 
 ```bash
-pipx install /path/to/ctfsheet/mcp          # recommended (isolated); or: pip install /path/to/ctfsheet/mcp
+pipx install "git+https://github.com/FletcherMeyer/Twilight-CTF-MCP-Tooling.git#subdirectory=mcp"   # or: pip install ./mcp from a clone
 ctfsheet-mcp login --url https://ctf.example.com
 #   Username: alice
 #   Password: ********

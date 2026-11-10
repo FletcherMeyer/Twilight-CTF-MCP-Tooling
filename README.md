@@ -3,7 +3,7 @@
 A credential-protected, team-shared CTF spreadsheet that humans **and AI agents** work on together.
 
 ```
-ctfsheet/
+Twilight-CTF-MCP-Tooling/
 ├── server/   web server + spreadsheet UI + REST API + Linux deployment scripts
 └── mcp/      ctfsheet-mcp: the MCP tool your Claude / ChatGPT / Gemini uses to talk to the server
 ```
@@ -47,9 +47,9 @@ ctfsheet/
 ### 1. Deploy the server (Linux)
 
 ```bash
-scp -r ctfsheet/server you@host:~/ctfsheet-server
-ssh you@host
-cd ~/ctfsheet-server
+# on the Linux host
+git clone https://github.com/FletcherMeyer/Twilight-CTF-MCP-Tooling.git
+cd Twilight-CTF-MCP-Tooling/server
 sudo bash deploy/install.sh --domain ctf.example.com --email you@example.com   # public DNS name
 # or, LAN / IP only:
 sudo bash deploy/install.sh --self-signed
@@ -65,7 +65,9 @@ Teammates use **Join a team** with the team name + a code.
 ### 3. Connect your AI
 
 ```bash
-pipx install ./ctfsheet/mcp          # or: pip install ./ctfsheet/mcp
+# on your own machine
+pipx install "git+https://github.com/FletcherMeyer/Twilight-CTF-MCP-Tooling.git#subdirectory=mcp"
+# or from a clone: pipx install ./Twilight-CTF-MCP-Tooling/mcp
 ctfsheet-mcp login --url https://ctf.example.com
 ```
 
