@@ -1,0 +1,48 @@
+# CTFSheet reverse proxy. Rendered by install.sh (placeholders: __SERVER_NAME__ etc.).
+limit_req_zone $binary_remote_addr zone=ctfsheet_auth:10m rate=10r/m;
+limit_req_zone $binary_remote_addr zone=ctfsheet_api:10m rate=30r/s;
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name __SERVER_NAME__;
+    server_tokens off;
+
+    location /.well-known/acme-challenge/ { root /var/www/letsencrypt; }
+    location / { return 301 https://$host:__HTTPS_PORT__$request_uri; }
+}
+
+server {
+    listen __HTTPS_PORT__ ssl http2;
+    listen [::]:__HTTPS_PORT__ ssl http2;
+    server_name __SERVER_NAME__;
+    server_tokens off;
+
+    ssl_certificate     __CERT__;
+    ssl_certificate_key __KEY__;
+    ssl_dhparam         __DHPARAM__;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256;
+    ssl_session_timeout 1d;
+    ssl_session_cache   shared:CTFSheetSSL:10m;
+    ssl_session_tickets off;
+
+    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains" always;
+
+    client_max_body_size 64m;
+    client_body_timeout  60s;
+    proxy_read_timeout   120s;
+
+    location /api/auth/ {
+        limit_req zone=ctfsheet_auth burst=10 nodelay;
+        limit_req_status 429;
+        include /etc/nginx/proxy_params_ctfsheet;
+    }
+
+    location / {
+        limit_req zone=ctfsheet_api burst=60 nodelay;
+        limit_req_status 429;
+        include /etc/nginx/proxy_params_ctfsheet;
+    }
+}

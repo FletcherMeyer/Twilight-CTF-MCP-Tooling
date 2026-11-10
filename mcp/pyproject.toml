@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ctfsheet-mcp"
+version = "1.0.0"
+description = "MCP tool that lets Claude, ChatGPT and Gemini agents work with a CTFSheet team board"
+requires-python = ">=3.10"
+dependencies = [
+  "mcp>=1.13,<2",
+  "httpx>=0.27",
+]
+
+[project.scripts]
+ctfsheet-mcp = "ctfsheet_mcp.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["ctfsheet_mcp*"]

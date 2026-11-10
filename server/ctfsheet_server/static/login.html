@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CTFSheet · Sign in</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="auth-page">
+  <main class="auth-card">
+    <h1 class="brand">CTF<span>Sheet</span></h1>
+    <p class="muted">Shared challenge board for your team and its agents.</p>
+
+    <nav class="auth-tabs" role="tablist">
+      <button data-pane="login" class="active">Sign in</button>
+      <button data-pane="join">Join a team</button>
+      <button data-pane="create" id="tab-create">Create a team</button>
+    </nav>
+
+    <form id="login" class="pane active" autocomplete="on">
+      <label>Username <input name="username" autocomplete="username" required></label>
+      <label>Password <input name="password" type="password" autocomplete="current-password" required></label>
+      <button class="primary" type="submit">Sign in</button>
+    </form>
+
+    <form id="join" class="pane" autocomplete="off">
+      <label>Team name <input name="team_name" required></label>
+      <label>Join code <input name="join_code" placeholder="XXXXX-XXXXX-XXXXX-XXXXX" required></label>
+      <div class="row2">
+        <label>Username <input name="username" autocomplete="username" required></label>
+        <label>Initials <input name="initials" maxlength="4" placeholder="ABC" required></label>
+      </div>
+      <label>Password <input name="password" type="password" autocomplete="new-password" required></label>
+      <p class="hint">The join code decides your role: editor code = read/write, viewer code = read-only.</p>
+      <button class="primary" type="submit">Join team</button>
+    </form>
+
+    <form id="create" class="pane" autocomplete="off">
+      <label>Team name <input name="team_name" required></label>
+      <div class="row2">
+        <label>Your username <input name="username" autocomplete="username" required></label>
+        <label>Initials <input name="initials" maxlength="4" placeholder="ABC" required></label>
+      </div>
+      <label>Password <input name="password" type="password" autocomplete="new-password" required></label>
+      <label id="creation-code-wrap" hidden>Server team-creation code <input name="creation_code"></label>
+      <button class="primary" type="submit">Create team</button>
+    </form>
+
+    <section id="codes" class="pane">
+      <h2>Team created</h2>
+      <p>Share these join codes with teammates. <strong>They are shown only once</strong> — the owner can rotate them later from the Team menu.</p>
+      <dl class="codes">
+        <dt>Editor code (read/write)</dt><dd><code id="editor-code"></code></dd>
+        <dt>Viewer code (read-only)</dt><dd><code id="viewer-code"></code></dd>
+      </dl>
+      <a class="button primary" href="/">Open the sheet</a>
+    </section>
+
+    <p id="error" class="error" role="alert"></p>
+  </main>
+  <script src="/static/common.js"></script>
+  <script src="/static/login.js"></script>
+</body>
+</html>

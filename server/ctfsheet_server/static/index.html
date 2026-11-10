@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CTFSheet</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">CTF<span>Sheet</span></div>
+    <div id="team-name" class="team-name"></div>
+    <input id="search" type="search" placeholder="Search challenges…" aria-label="Search challenges">
+    <div class="spacer"></div>
+    <button id="btn-new" class="primary">+ Challenge</button>
+    <button id="btn-agentmd">agent.md</button>
+    <button id="btn-team">Team</button>
+    <button id="btn-tokens">API tokens</button>
+    <button id="btn-account" class="me"></button>
+    <button id="btn-logout" class="ghost">Sign out</button>
+  </header>
+
+  <nav id="tabs" class="tabs" aria-label="Categories"></nav>
+  <main id="sheet" class="sheet"></main>
+
+  <div id="modal-root"></div>
+  <script src="/static/common.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

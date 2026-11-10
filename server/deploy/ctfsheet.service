@@ -1,0 +1,47 @@
+[Unit]
+Description=CTFSheet team challenge spreadsheet
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ctfsheet
+Group=ctfsheet
+WorkingDirectory=/opt/ctfsheet/app
+EnvironmentFile=/etc/ctfsheet/ctfsheet.env
+# Bound to loopback only; nginx terminates TLS in front of it. One worker keeps
+# the in-memory rate limiter authoritative.
+ExecStart=/opt/ctfsheet/venv/bin/uvicorn ctfsheet_server.app:app \
+    --host 127.0.0.1 --port 8088 --workers 1 \
+    --proxy-headers --forwarded-allow-ips 127.0.0.1 \
+    --no-server-header --log-level info
+Restart=on-failure
+RestartSec=3
+
+# ---- sandboxing ----
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/ctfsheet
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged
+CapabilityBoundingSet=
+AmbientCapabilities=
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
