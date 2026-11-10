@@ -1,6 +1,6 @@
 # CTFSheet
 
-A credential-protected, team-shared CTF spreadsheet that humans **and AI agents** work on together.
+A team-shared CTF spreadsheet that humans **and AI agents** work on together.
 
 ```
 Twilight-CTF-MCP-Tooling/
@@ -11,7 +11,7 @@ Twilight-CTF-MCP-Tooling/
 ## What it does
 
 * **Sheet layout** – one tab per category (Web, Crypto, Pwn, …), sections per difficulty
-  (Easy / Medium / Hard / Insane / Unrated), one row per challenge.
+  (Easy / Medium / Hard), one row per challenge.
 * **Every row holds all materials**: description, points, status, flags/answers (own column,
   masked until clicked), solvers' initials (first solver highlighted, later ones = verifiers),
   agent `context.md` files, per-flag `solution.md` files, human solutions, and challenge files.
